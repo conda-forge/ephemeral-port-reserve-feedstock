@@ -6,7 +6,7 @@ package:
 
 source:
   - folder: dist
-    url: https://pypi.io/packages/source/e/ephemeral-port-reserve/ephemeral_port_reserve-{{ version }}.tar.gz
+    url: https://pypi.org/packages/source/e/ephemeral-port-reserve/ephemeral_port_reserve-{{ version }}.tar.gz
     sha256: b8f7da2c97090cb0801949dec1d6d40c97220505b742a70935ffbd43234c14b2
   - folder: src
     url: https://github.com/Yelp/ephemeral-port-reserve/archive/refs/tags/v{{ version }}.tar.gz
@@ -16,15 +16,16 @@ build:
   entry_points:
     - ephemeral-port-reserve = ephemeral_port_reserve:main
   noarch: python
-  script: cd dist && {{ PYTHON }} -m pip install . -vv
-  number: 0
+  script: cd dist && {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 1
 
 requirements:
   host:
     - pip
-    - python >=3.5
+    - python {{ python_min }}
+    - setuptools
   run:
-    - python >=3.5
+    - python >={{ python_min }}
 
 test:
   source_files:
@@ -37,6 +38,7 @@ test:
   requires:
     - pip
     - pytest-cov
+    - python {{ python_min }}
 
 about:
   home: https://github.com/Yelp/ephemeral-port-reserve
