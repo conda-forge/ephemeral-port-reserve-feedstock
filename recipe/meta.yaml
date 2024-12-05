@@ -16,13 +16,14 @@ build:
   entry_points:
     - ephemeral-port-reserve = ephemeral_port_reserve:main
   noarch: python
-  script: cd dist && {{ PYTHON }} -m pip install . -vv
+  script: cd dist && {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 1
 
 requirements:
   host:
     - pip
     - python {{ python_min }}
+    - setuptools
   run:
     - python >={{ python_min }}
 
